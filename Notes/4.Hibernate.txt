@@ -1,0 +1,209 @@
+4.Hibernate:::
+
+👉 What is Hibernate?
+
+Hibernate is a Java ORM (Object Relational Mapping) Framework.
+
+It helps Java applications interact with databases without writing SQL queries manually.
+
+👉 Converts:
+
+Java Object  ⇄  Database Table
+
+
+✅ Why Hibernate?
+
+In JDBC ❌
+
+Too much code
+
+Manual SQL
+
+Manual connection handling
+
+Hibernate ✅
+
+Automatic SQL generation
+
+Less code
+
+Easy database handling
+
+✅ Example Concept
+JDBC Way
+INSERT INTO student VALUES(101,'Akhilesh');
+
+Hibernate Way
+session.save(student);
+
+Hibernate automatically creates SQL.
+
+
+✅ Hibernate Architecture
+
+Java Application
+      ↓
+Hibernate API
+      ↓
+SessionFactory
+      ↓
+Session
+      ↓
+Database
+
+
+✅ Important Hibernate Components
+
+
+| Component      | Purpose                    |
+| -------------- | -------------------------- |
+| Configuration  | Reads DB settings          |
+| SessionFactory | Creates sessions           |
+| Session        | Performs CRUD              |
+| Transaction    | Ensures data safety        |
+| Entity Class   | Java class mapped to table |
+
+
+✅ Hibernate CRUD Example
+
+1️⃣ Entity Class (Student.java)
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity
+public class Student {
+
+    @Id
+    private int id;
+    private String name;
+    private int marks;
+
+    // getters & setters
+}
+
+2️⃣ Configuration File (hibernate.cfg.xml)
+
+<hibernate-configuration>
+ <session-factory>
+
+  <property name="hibernate.connection.driver_class">
+     com.mysql.cj.jdbc.Driver
+  </property>
+
+  <property name="hibernate.connection.url">
+     jdbc:mysql://localhost:3306/jdbcdb
+  </property>
+
+  <property name="hibernate.connection.username">
+     root
+  </property>
+
+  <property name="hibernate.connection.password">
+     1234
+  </property>
+
+  <property name="hibernate.dialect">
+     org.hibernate.dialect.MySQL8Dialect
+  </property>
+
+  <mapping class="Student"/>
+
+ </session-factory>
+</hibernate-configuration>
+
+
+3️⃣ Insert Data (Main Class)
+
+import org.hibernate.*;
+import org.hibernate.cfg.Configuration;
+
+public class MainApp {
+
+    public static void main(String[] args) {
+
+        Configuration cfg =
+            new Configuration().configure();
+
+        SessionFactory factory =
+            cfg.buildSessionFactory();
+
+        Session session =
+            factory.openSession();
+
+        Transaction tx =
+            session.beginTransaction();
+
+        Student s = new Student();
+        s.setId(101);
+        s.setName("Akhilesh");
+        s.setMarks(90);
+
+        session.save(s);
+
+        tx.commit();
+        session.close();
+    }
+}
+
+
+✅ Hibernate CRUD Methods
+
+| Operation | Method     |
+| --------- | ---------- |
+| Insert    | `save()`   |
+| Read      | `get()`    |
+| Update    | `update()` |
+| Delete    | `delete()` |
+
+
+✅ Hibernate vs JDBC
+
+| JDBC           | Hibernate         |
+| -------------- | ----------------- |
+| SQL required   | No SQL            |
+| More code      | Less code         |
+| Manual mapping | Automatic mapping |
+| Low level      | High level ORM    |
+
+
+
+✅ Hibernate Coding Questions (5)
+🟢 Basic Level
+✅ Q1. Hibernate Configuration
+
+Create:
+
+Entity class Student
+
+hibernate.cfg.xml
+
+Insert one record using Hibernate.
+
+✅ Q2. Fetch Data
+
+Write Hibernate program to retrieve student data using:
+
+session.get()
+🟡 Intermediate Level
+✅ Q3. Update Object
+
+Update student marks using Hibernate session.
+
+✅ Q4. Delete Record
+
+Delete student using:
+
+session.delete()
+🔴 Advanced Level
+✅ Q5. One-to-Many Mapping ⭐
+
+Create Hibernate project:
+
+Department → Employees
+
+One department has multiple employees.
+
+Implement mapping annotations.
+
+

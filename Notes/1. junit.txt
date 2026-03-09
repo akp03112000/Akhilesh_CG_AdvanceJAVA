@@ -1,0 +1,326 @@
+ADVANCE JAVA:::
+
+JUNIT...
+ 👉 What is JUnit?
+
+JUnit is a testing framework used to test Java code.
+
+👉 Why do we use JUnit?
+
+To check logic correctness
+
+To find bugs early
+
+To automate testing
+
+To ensure code works after changes
+
+Example
+
+Suppose you have a method:
+
+int add(int a, int b){
+   return a + b;
+}
+
+JUnit test:
+
+@Test
+void testAdd(){
+   assertEquals(5, add(2,3));
+}
+
+✅ If output = 5 → Test Passed
+❌ Otherwise → Test Failed
+
+👉 Important Annotations
+
+| Annotation    | Purpose                    |
+| ------------- | -------------------------- |
+| `@Test`       | Defines test method        |
+| `@BeforeEach` | Runs before every test     |
+| `@AfterEach`  | Runs after test            |
+| `@BeforeAll`  | Runs once before all tests |
+| `@AfterAll`   | Runs once after all tests  |
+
+
+✅ Most Asked Assertions
+
+Assertions in JUnit are methods used to validate expected and actual results during unit testing.
+
+1️⃣ assertTrue()
+👉 Checks condition is TRUE
+@Test
+void testAge(){
+    assertTrue(18 > 10);
+}
+
+✅ Pass → condition true
+❌ Fail → condition false
+
+
+2️⃣ assertFalse()
+👉 Checks condition is FALSE
+@Test
+void testValue(){
+    assertFalse(5 < 3);
+}
+
+✅ Pass if condition is false
+
+
+3️⃣ assertNull()
+👉 Checks object value is NULL
+@Test
+void testNull(){
+    String name = null;
+    assertNull(name);
+}
+
+✅ Pass if value = null
+
+
+4️⃣ assertNotNull()
+👉 Checks object is NOT NULL
+@Test
+void testNotNull(){
+    String name = "Akhilesh";
+    assertNotNull(name);
+}
+
+
+5️⃣ assertSame()
+👉 Checks both references point to SAME object
+@Test
+void testSame(){
+    String a = "Java";
+    String b = a;
+    assertSame(a, b);
+}
+
+
+6️⃣ assertNotSame()
+👉 Checks objects are different
+assertNotSame(obj1, obj2);
+
+
+7️⃣ assertArrayEquals()
+👉 Used for comparing arrays
+@Test
+void testArray(){
+    int[] a = {1,2,3};
+    int[] b = {1,2,3};
+
+    assertArrayEquals(a, b);
+}
+
+
+8️⃣ assertThrows()  (Very Important)
+👉 Checks exception occurs
+@Test
+void testException(){
+    assertThrows(
+        ArithmeticException.class,
+        () -> { int a = 10/0; }
+    );
+}
+
+✅ Pass if exception occurs
+
+
+Add JUnit Using Eclipse:::
+
+✅ Step 1: Create Java Project
+
+Open Eclipse
+
+Click File → New → Java Project
+
+Give project name
+👉 JUnitDemo
+
+Click Finish
+
+
+✅ Step 2: Add JUnit Library
+
+Right click on project
+
+Select
+👉 Build Path → Add Libraries
+
+Choose
+✅ JUnit
+
+Click Next
+
+Select:
+
+JUnit 5
+
+Click Finish
+
+✅ JUnit is now added successfully.
+
+
+✅ Step 3: Create Class to Test
+
+Example class:
+
+package com.demo;
+
+public class Calculator {
+    public int add(int a, int b) {
+        return a + b;
+    }
+}
+
+
+✅ Step 4: Create JUnit Test Case
+
+Right click on project/package
+
+Click
+👉 New → JUnit Test Case
+
+Select:
+
+JUnit 5
+
+Class Name:
+
+CalculatorTest
+
+Click Finish
+
+
+✅ Step 5: Write Test Code
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+
+class CalculatorTest {
+
+    @Test
+    void testAdd() {
+        Calculator c = new Calculator();
+        assertEquals(5, c.add(2,3));
+    }
+}
+
+
+✅ Step 6: Run JUnit Test
+
+Right click on test file →
+✅ Run As → JUnit Test
+
+✅ Result
+
+🟢 Green bar → Test Passed
+🔴 Red bar → Test Failed
+
+✅ Folder Structure After Setup
+JUnitDemo
+ ├── src
+ │    ├── Calculator.java
+ │    └── CalculatorTest.java
+ └── JUnit Library
+
+
+
+✅ JUnit Questions (Basic → High Level)
+🟢 Basic Level
+
+What is JUnit?
+
+What is Unit Testing?
+
+Why do we use JUnit in Java?
+
+What is the purpose of @Test annotation?
+
+What is assertEquals() in JUnit?
+
+🟡 Intermediate Level
+
+Difference between assertTrue() and assertFalse()?
+
+What is the use of @BeforeEach and @AfterEach?
+
+What happens when a test case fails?
+
+What is Test Lifecycle in JUnit?
+
+How do you run JUnit test cases in Eclipse?
+
+🔴 Interview / Advanced Level
+
+Difference between JUnit 4 and JUnit 5?
+
+What is parameterized testing in JUnit?
+
+What is assertThrows()?
+
+How do you test exceptions in JUnit?
+
+Can multiple test cases run independently? How?
+
+
+✅ JUnit Coding Questions..
+✅ Q1. Test Addition Method
+
+Create a JUnit test case for:
+
+int add(int a, int b)
+
+Verify result using assertion.
+
+
+✅ Q2. Test Even Number
+
+Write JUnit test to check:
+
+boolean isEven(int num)
+
+Expected:
+
+4 → true
+
+5 → false
+
+Use:
+
+assertTrue()
+assertFalse()
+
+
+✅ Q3. Test Null Value
+
+Write test case to verify method returns null.
+
+String getName()
+
+Use:
+
+assertNull()
+
+
+✅ Q4. Exception Testing
+
+Test method:
+
+int divide(int a, int b)
+
+Check division by zero exception using:
+
+assertThrows()
+
+
+✅ Q5. Array Comparison
+
+Test two arrays are equal.
+
+int[] getNumbers()
+
+Use:
+
+assertArrayEquals()

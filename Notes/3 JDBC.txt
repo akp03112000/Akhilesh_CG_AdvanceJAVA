@@ -1,0 +1,273 @@
+3: JDBC::
+
+👉 What is JDBC?
+
+JDBC (Java Database Connectivity) is a Java API used to connect Java applications with databases.
+
+It allows Java programs to:
+
+✅ Connect to database
+
+✅ Execute SQL queries
+
+✅ Insert / Update / Delete data
+
+✅ Retrieve data
+
+
+✅ Why JDBC is Needed?
+
+Java application cannot directly talk to database.
+
+JDBC acts as a bridge between:
+
+Java Application  ↔  Database
+
+✅ JDBC Architecture
+
+Java Program
+     ↓
+JDBC API
+     ↓
+DriverManager
+     ↓
+Database Driver
+     ↓
+MySQL / Oracle / PostgreSQL
+
+✅ Important JDBC Classes
+
+| Class / Interface   | Purpose                        |
+| ------------------- | ------------------------------ |
+| `DriverManager`     | Establish connection           |
+| `Connection`        | Represents DB connection       |
+| `Statement`         | Executes SQL queries           |
+| `PreparedStatement` | Executes parameterized queries |
+| `ResultSet`         | Stores retrieved data          |
+
+✅ Basic JDBC Steps 
+Step 1: Load Driver
+Step 2: Create Connection
+Step 3: Create Statement
+Step 4: Execute Query
+Step 5: Close Connection
+
+✅ Simple Example Code
+
+import java.sql.*;
+
+public class JdbcDemo {
+    public static void main(String[] args) throws Exception {
+
+        Connection con = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/test",
+                "root",
+                "1234");
+
+        Statement st = con.createStatement();
+
+        ResultSet rs = st.executeQuery("select * from student");
+
+        while (rs.next()) {
+            System.out.println(rs.getInt(1) + " " + rs.getString(2));
+        }
+
+        con.close();
+    }
+}
+
+✅ Types of Statements
+
+| Type                  | Use                             |
+| --------------------- | ------------------------------- |
+| `Statement`           | Simple SQL                      |
+| `PreparedStatement` ⭐ | Secure & prevents SQL Injection |
+| `CallableStatement`   | Used for stored procedures      |
+
+
+✅ JDBC CRUD Complete Program (MySQL + Java)
+
+✅ Step 1: Create Database & Table (MySQL)
+
+CREATE DATABASE jdbcdb;
+
+USE jdbcdb;
+
+CREATE TABLE student(
+    id INT PRIMARY KEY,
+    name VARCHAR(50),
+    marks INT
+);
+
+
+✅ Step 2: Add MySQL Connector JAR in Eclipse
+
+(Add like Mockito jars)
+
+👉 Download:
+
+mysql-connector-j-x.x.x.jar
+
+Add using:
+
+Build Path → Add External JAR
+
+
+✅ Step 3: JDBC CRUD Java Program
+
+import java.sql.*;
+import java.util.Scanner;
+
+public class JdbcCRUD {
+
+    static final String URL =
+        "jdbc:mysql://localhost:3306/jdbcdb";
+    static final String USER = "root";
+    static final String PASS = "1234";
+
+    public static void main(String[] args) throws Exception {
+
+        Connection con =
+            DriverManager.getConnection(URL, USER, PASS);
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("1.Insert");
+        System.out.println("2.Display");
+        System.out.println("3.Update");
+        System.out.println("4.Delete");
+
+        int choice = sc.nextInt();
+
+        switch(choice) {
+
+        // ✅ CREATE
+        case 1:
+            PreparedStatement ps1 =
+            con.prepareStatement(
+            "insert into student values(?,?,?)");
+
+            System.out.print("Id: ");
+            ps1.setInt(1, sc.nextInt());
+
+            System.out.print("Name: ");
+            ps1.setString(2, sc.next());
+
+            System.out.print("Marks: ");
+            ps1.setInt(3, sc.nextInt());
+
+            ps1.executeUpdate();
+            System.out.println("Inserted Successfully");
+            break;
+
+        // ✅ READ
+        case 2:
+            Statement st = con.createStatement();
+            ResultSet rs =
+            st.executeQuery("select * from student");
+
+            while(rs.next()) {
+                System.out.println(
+                rs.getInt(1)+" "+
+                rs.getString(2)+" "+
+                rs.getInt(3));
+            }
+            break;
+
+        // ✅ UPDATE
+        case 3:
+            PreparedStatement ps2 =
+            con.prepareStatement(
+            "update student set marks=? where id=?");
+
+            System.out.print("New Marks: ");
+            ps2.setInt(1, sc.nextInt());
+
+            System.out.print("Student Id: ");
+            ps2.setInt(2, sc.nextInt());
+
+            ps2.executeUpdate();
+            System.out.println("Updated Successfully");
+            break;
+
+        // ✅ DELETE
+        case 4:
+            PreparedStatement ps3 =
+            con.prepareStatement(
+            "delete from student where id=?");
+
+            System.out.print("Student Id: ");
+            ps3.setInt(1, sc.nextInt());
+
+            ps3.executeUpdate();
+            System.out.println("Deleted Successfully");
+            break;
+        }
+
+        con.close();
+    }
+}
+
+
+
+
+✅ CRUD Meaning
+
+| Operation | SQL    | Method            |
+| --------- | ------ | ----------------- |
+| Create    | INSERT | `executeUpdate()` |
+| Read      | SELECT | `executeQuery()`  |
+| Update    | UPDATE | `executeUpdate()` |
+| Delete    | DELETE | `executeUpdate()` |
+
+
+
+✅ JDBC Coding Questions (5)
+🟢 Basic Level
+✅ Q1. Database Connection
+
+Write a JDBC program to:
+
+Connect Java application with MySQL database.
+
+✅ Q2. Insert Record
+
+Write JDBC program to insert a student record:
+
+(id, name, marks)
+
+using PreparedStatement.
+
+🟡 Intermediate Level
+
+✅ Q3. Display Records
+
+Write JDBC program to:
+
+Fetch all students
+
+Display using ResultSet.
+
+
+✅ Q4. Update Record
+
+Update student marks using student ID.
+
+Example:
+
+Update marks where id = ?
+🔴 Advanced Level
+
+✅ Q5. Menu Driven CRUD Application ⭐
+
+Create JDBC program with menu:
+
+1.Insert
+2.Display
+3.Update
+4.Delete
+
+
+
+
+

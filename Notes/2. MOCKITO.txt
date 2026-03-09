@@ -1,0 +1,337 @@
+2. MOCKITO::
+
+👉 What is Mockito?
+
+Mockito is a Java mocking framework used for testing.
+
+It creates fake (mock) objects so that we can test a class without using real dependencies like:
+
+Database
+
+API
+
+External service
+
+👉 Mostly used with JUnit.
+
+
+✅ Why Mockito is Needed?
+
+Suppose:
+
+Service Class → Repository → Database
+
+While testing:
+
+Database may not exist
+
+Connection may fail
+
+Testing becomes slow
+
+✅ Mockito creates a fake Repository instead of real database.
+
+Normal Situation
+UserService → UserRepository → Database
+
+During testing ❌ database not required.
+
+Mockito does:
+
+UserService → Mock Repository (Fake)
+
+✅ Basic Mockito Annotations
+| Annotation     | Purpose                 |
+| -------------- | ----------------------- |
+| `@Mock`        | Creates fake object     |
+| `@InjectMocks` | Injects mock into class |
+| `when()`       | Defines mock behavior   |
+| `verify()`     | Checks method call      |
+
+
+✅ Example (Very Important ⭐)
+Service Class
+class UserService {
+    UserRepository repo;
+
+    public String getUser() {
+        return repo.findUser();
+    }
+}
+
+
+Test Using Mockito + JUnit
+
+import static org.mockito.Mockito.*;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+
+class UserServiceTest {
+
+    @Mock
+    UserRepository repo;
+
+    @InjectMocks
+    UserService service;
+
+    @Test
+    void testUser() {
+
+        when(repo.findUser())
+            .thenReturn("Akhilesh");
+
+        String result = service.getUser();
+
+        assertEquals("Akhilesh", result);
+    }
+}
+
+✅ No database used
+✅ Fast testing
+✅ Controlled output
+
+✅ Important Mockito Methods
+| Method         | Use                 |
+| -------------- | ------------------- |
+| `mock()`       | Create mock object  |
+| `when()`       | Define behavior     |
+| `thenReturn()` | Return fake value   |
+| `verify()`     | Check method called |
+| `times()`      | Check call count    |
+
+
+Example:
+
+verify(repo, times(1)).findUser();
+
+
+✅ JUnit vs Mockito (Interview Question ⭐)
+| JUnit             | Mockito               |
+| ----------------- | --------------------- |
+| Testing framework | Mocking framework     |
+| Tests methods     | Creates fake objects  |
+| Assertions        | Dependency simulation |
+
+👉 JUnit tests
+👉 Mockito supports testing
+
+✅ One-Line Interview Answer
+
+Mockito is a Java mocking framework used with JUnit to create dummy objects for testing application components independently.
+
+
+✅Mockito also needs setup in Eclipse, just like JUnit.
+
+But Mockito is not built-in in Eclipse, so we must add libraries manually or using Maven.
+
+I’ll show you the easiest way.
+
+
+✅ Method 1: Setup Mockito in Eclipse (Without Maven)
+
+
+✅ Step 1: Download Required JAR Files
+
+Download these jars:
+
+mockito-core
+
+byte-buddy
+
+byte-buddy-agent
+
+objenesis
+
+👉 Download from:
+
+https://mvnrepository.com/
+
+Search:
+
+mockito-core
+
+Download latest version jars.
+
+
+✅ Step 2: Add JARs to Project
+
+Create folder inside project:
+
+lib
+
+Copy all downloaded .jar files into lib.
+
+
+
+✅ Step 3: Add to Build Path
+
+Right click project
+
+Build Path → Configure Build Path
+
+Go to Libraries
+
+Click:
+
+Add External JARs
+
+Select all Mockito jars
+
+Click Apply → OK
+
+✅ Mockito added successfully.
+
+
+
+✅ Step 4: Make Sure JUnit is Already Added
+
+Mockito works with JUnit, so project must contain:
+
+✅ JUnit 5 Library
+
+
+✅ Step 5: Simple Mockito Test
+
+import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+class DemoTest {
+
+    @Test
+    void testMock() {
+
+        List list = mock(List.class);
+
+        when(list.get(0)).thenReturn("Hello");
+
+        assertEquals("Hello", list.get(0));
+    }
+}
+
+Run → Run As → JUnit Test
+
+✅ Method 2: Setup Mockito in Eclipse (With Maven)
+
+Instead of manual jars → use Maven.
+
+Just add dependency:
+
+<dependency>
+    <groupId>org.mockito</groupId>
+    <artifactId>mockito-core</artifactId>
+    <version>5.11.0</version>
+    <scope>test</scope>
+</dependency>
+
+✅ Automatically downloads everything.
+
+⭐Interview Point ::
+
+| Tool    | Built-in Eclipse?      |
+| ------- | ---------------------- |
+| JUnit   | ✅ Yes                  |
+| Mockito | ❌ No (Need dependency) |
+
+
+✅ Mockito Questions (Basic → High Level)
+🟢 Basic Level
+
+What is Mockito?
+
+Why do we use Mockito?
+
+What is a Mock Object?
+
+Difference between real object and mock object?
+
+Can Mockito work without JUnit?
+
+🟡 Intermediate Level
+
+What is @Mock annotation?
+
+What is @InjectMocks?
+
+Explain when() and thenReturn() methods.
+
+What is the use of verify() in Mockito?
+
+Why mocking is required in Service layer testing?
+
+🔴 Interview / Advanced Level
+
+Difference between Stub and Mock?
+
+What happens if behavior is not defined in Mockito?
+
+How does Mockito help in database-independent testing?
+
+Difference between Spy and Mock?
+
+Can Mockito mock static methods?
+
+✅ Mockito Coding Questions
+✅ Q1. Mock List Object
+
+Create mock of List.
+
+Requirement:
+
+list.get(0) → "Java"
+
+Use:
+
+mock()
+when()
+thenReturn()
+✅ Q2. Service Layer Testing ⭐
+
+Given:
+
+class UserService {
+   UserRepository repo;
+
+   String getUserName(){
+       return repo.findName();
+   }
+}
+
+Task:
+
+Mock UserRepository
+
+Return fake username
+
+Test service method
+
+✅ Q3. Verify Method Call
+
+Check repository method called once.
+
+Use:
+
+verify(repo, times(1))
+✅ Q4. Multiple Return Values
+
+Mock behavior:
+
+when(repo.getData())
+
+Return:
+
+First call → A
+Second call → B
+✅ Q5. Mock Exception Throwing ⭐⭐
+
+Mock repository to throw exception:
+
+when(repo.save())
+      .thenThrow(RuntimeException.class);
+
+Test service handling.
+
+
+

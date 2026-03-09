@@ -1,0 +1,163 @@
+5. JPA::
+
+👉 What is JPA?
+
+JPA (Java Persistence API) is a Java specification used to manage database operations using Java objects.
+
+⚠️ Important:
+
+JPA is NOT a framework
+It is only a set of rules (interface/specification).
+
+Frameworks like:
+✅ Hibernate
+✅ EclipseLink
+
+implement JPA.
+
+✅ Simple Understanding ⭐
+JPA = Rules
+Hibernate = Implementation of rules
+
+Like:
+
+Vehicle → Car (Implementation)
+✅ Why JPA?
+
+Before JPA:
+
+Every ORM had different methods
+
+Code dependency increased
+
+JPA provides:
+✅ Standard way to perform ORM
+✅ Database independence
+✅ Easy switching between ORM tools
+
+
+✅ JPA Working Flow
+Java Application
+       ↓
+JPA API
+       ↓
+Hibernate (Implementation)
+       ↓
+Database
+
+✅ Important JPA Components
+
+| Component        | Purpose                    |
+| ---------------- | -------------------------- |
+| Entity           | Java class mapped to table |
+| EntityManager    | Performs CRUD              |
+| Persistence Unit | DB configuration           |
+| JPQL             | Query language             |
+
+✅ Common JPA Annotations
+
+| Annotation        | Use                  |
+| ----------------- | -------------------- |
+| `@Entity`         | Marks class as table |
+| `@Id`             | Primary key          |
+| `@Table`          | Table name           |
+| `@Column`         | Column mapping       |
+| `@GeneratedValue` | Auto ID              |
+
+
+✅ JPA Entity Example
+
+import jakarta.persistence.*;
+
+@Entity
+@Table(name="student")
+public class Student {
+
+    @Id
+    private int id;
+
+    private String name;
+    private int marks;
+
+    // getters & setters
+}
+
+
+✅ Insert Data Using JPA
+
+EntityManagerFactory emf =
+Persistence.createEntityManagerFactory("pu");
+
+EntityManager em = emf.createEntityManager();
+
+em.getTransaction().begin();
+
+Student s = new Student();
+s.setId(101);
+s.setName("Akhilesh");
+s.setMarks(95);
+
+em.persist(s);
+
+em.getTransaction().commit();
+
+✅ JPA CRUD Methods
+
+| Operation | Method      |
+| --------- | ----------- |
+| Insert    | `persist()` |
+| Read      | `find()`    |
+| Update    | `merge()`   |
+| Delete    | `remove()`  |
+
+
+✅ JPA vs Hibernate
+
+| JPA             | Hibernate           |
+| --------------- | ------------------- |
+| Specification   | Framework           |
+| Standard API    | Implementation      |
+| Interfaces only | Actual working code |
+
+
+👉 Hibernate implements JPA.
+
+
+✅ JPA Coding Questions (5)
+🟢 Basic Level
+✅ Q1. Create JPA Entity
+
+Create Student entity using:
+
+@Entity
+@Id
+@Table
+✅ Q2. Insert Record Using EntityManager
+
+Persist student object using:
+
+em.persist()
+🟡 Intermediate Level
+✅ Q3. Fetch Record
+
+Retrieve student using:
+
+em.find()
+✅ Q4. Update Record
+
+Update student marks using:
+
+em.merge()
+🔴 Advanced Level
+✅ Q5. JPQL Query ⭐
+
+Write JPQL query to:
+
+Fetch students having marks > 80
+
+Example concept:
+
+SELECT s FROM Student s WHERE s.marks > 80
+
+
+
